@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cannabis Price Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Cannabis Price Calculator</h1>
+        <form id="calculator-form">
+            <label for="state">State:</label>
+            <select id="state" required>
+                <option value="">Select a state</option>
+                <option value="AK">Alaska</option>
+                <option value="AZ">Arizona</option>
+                <option value="CA">California</option>
+                <option value="CO">Colorado</option>
+                <option value="CT">Connecticut</option>
+                <option value="IL">Illinois</option>
+                <option value="MA">Massachusetts</option>
+                <option value="MI">Michigan</option>
+                <option value="MT">Montana</option>
+                <option value="NV">Nevada</option>
+                <option value="NJ">New Jersey</option>
+                <option value="NM">New Mexico</option>
+                <option value="NY">New York</option>
+                <option value="OR">Oregon</option>
+                <option value="VT">Vermont</option>
+                <option value="VA">Virginia</option>
+                <option value="WA">Washington</option>
+            </select>
+
+            <label for="base-price">Base Price ($):</label>
+            <input type="number" id="base-price" min="0" step="0.01" required>
+
+            <button type="submit">Calculate</button>
+        </form>
+
+        <div id="result" class="hidden">
+            <h2>Price Breakdown:</h2>
+            <p>Base Price: $<span id="display-base-price"></span></p>
+            <p>State Tax: $<span id="state-tax"></span></p>
+            <p>Local Tax: $<span id="local-tax"></span></p>
+            <p>Excise Tax: $<span id="excise-tax"></span></p>
+            <h3>Total Price: $<span id="total-price"></span></h3>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>

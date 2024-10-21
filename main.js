@@ -1,0 +1,52 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('calculator-form');
+    const resultDiv = document.getElementById('result');
+
+    const taxRates = {
+        AK: { stateTax: 0, localTax: 0, exciseTax: 0 },
+        AZ: { stateTax: 0.16, localTax: 0.02, exciseTax: 0 },
+        CA: { stateTax: 0.15, localTax: 0.10, exciseTax: 0 },
+        CO: { stateTax: 0.15, localTax: 0.08, exciseTax: 0 },
+        CT: { stateTax: 0.0625, localTax: 0, exciseTax: 0.0375 },
+        IL: { stateTax: 0.07, localTax: 0.03, exciseTax: 0.10 },
+        MA: { stateTax: 0.0625, localTax: 0.03, exciseTax: 0.1075 },
+        MI: { stateTax: 0.06, localTax: 0, exciseTax: 0.10 },
+        MT: { stateTax: 0.04, localTax: 0, exciseTax: 0.16 },
+        NV: { stateTax: 0.0685, localTax: 0.0315, exciseTax: 0.10 },
+        NJ: { stateTax: 0.0625, localTax: 0.02, exciseTax: 0 },
+        NM: { stateTax: 0.12, localTax: 0, exciseTax: 0 },
+        NY: { stateTax: 0.13, localTax: 0.04, exciseTax: 0 },
+        OR: { stateTax: 0.17, localTax: 0.03, exciseTax: 0 },
+        VT: { stateTax: 0.06, localTax: 0, exciseTax: 0.14 },
+        VA: { stateTax: 0.0530, localTax: 0, exciseTax: 0.2125 },
+        WA: { stateTax: 0.37, localTax: 0, exciseTax: 0 }
+    };
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const state = document.getElementById('state').value;
+        const basePrice = parseFloat(document.getElementById('base-price').value);
+
+        if (!state || isNaN(basePrice)) {
+            alert('Please select a state and enter a valid base price.');
+            return;
+        }
+
+        const { stateTax, localTax, exciseTax } = taxRates[state];
+        
+        const stateTaxAmount = basePrice * stateTax;
+        const localTaxAmount = basePrice * localTax;
+        const exciseTaxAmount = basePrice * exciseTax;
+        const totalPrice = basePrice + stateTaxAmount + localTaxAmount + exciseTaxAmount;
+
+        document.getElementById('display-base-price').textContent = basePrice.toFixed(2);
+        document.getElementById('state-tax').textContent = stateTaxAmount.toFixed(2);
+        document.getElementById('local-tax').textContent = localTaxAmount.toFixed(2);
+        document.getElementById('excise-tax').textContent = exciseTaxAmount.toFixed(2);
+        document.getElementById('total-price').textContent = totalPrice.toFixed(2);
+
+        resultDiv.classList.remove('hidden');
+    });
+});
+
