@@ -24,6 +24,11 @@ document.addEventListener('DOMContentLoaded', () => {
         WA: { stateTax: 0.37, localTax: 0, exciseTax: 0 }
     };
 
+    // Function to check if the user is on a mobile device
+    function isMobile() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
     // Add event listeners for real-time validation
     stateSelect.addEventListener('change', validateForm);
     basePriceInput.addEventListener('input', validateForm);
@@ -54,6 +59,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         resultDiv.classList.remove('hidden');
     });
+
+    // Set up the base price input
+    if (isMobile()) {
+        basePriceInput.setAttribute('type', 'number');
+        basePriceInput.setAttribute('step', '0.01');
+        basePriceInput.setAttribute('min', '0');
+    } else {
+        basePriceInput.setAttribute('type', 'text');
+        basePriceInput.addEventListener('input', function(e) {
+            this.value = this.value.replace(/[^0-9.]/g, '');
+        });
+    }
 
     function validateForm() {
         const state = stateSelect.value;
