@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('calculator-form');
     const resultDiv = document.getElementById('result');
+    const stateSelect = document.getElementById('state');
+    const basePriceInput = document.getElementById('base-price');
 
     const taxRates = {
         AK: { stateTax: 0, localTax: 0, exciseTax: 0 },
@@ -22,11 +24,15 @@ document.addEventListener('DOMContentLoaded', () => {
         WA: { stateTax: 0.37, localTax: 0, exciseTax: 0 }
     };
 
+    // Add event listeners for real-time validation
+    stateSelect.addEventListener('change', validateForm);
+    basePriceInput.addEventListener('input', validateForm);
+
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         
-        const state = document.getElementById('state').value;
-        const basePrice = parseFloat(document.getElementById('base-price').value);
+        const state = stateSelect.value;
+        const basePrice = parseFloat(basePriceInput.value);
 
         if (!state || isNaN(basePrice)) {
             alert('Please select a state and enter a valid base price.');
@@ -48,5 +54,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         resultDiv.classList.remove('hidden');
     });
-});
 
+    function validateForm() {
+        const state = stateSelect.value;
+        const basePrice = parseFloat(basePriceInput.value);
+        const submitButton = form.querySelector('button[type="submit"]');
+
+        if (state && !isNaN(basePrice) && basePrice > 0) {
+            submitButton.disabled = false;
+        } else {
+            submitButton.disabled = true;
+        }
+    }
+
+    // Initial validation
+    validateForm();
+});
